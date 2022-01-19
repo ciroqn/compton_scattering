@@ -101,7 +101,7 @@ print('\n')
 i_sq_abs = []
 count_ = 0
 for element in i_sq_err:
-    i_sq_abs.append(element*fineBeam['current (A)'][count_])
+    i_sq_abs.append(element*x_sq[count_])
     count_ += 1
     
 print('Printing the absolute value of errors for i^2:')
