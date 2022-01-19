@@ -73,3 +73,40 @@ print('------------------------------------')
 
 plt.scatter(x_sq, y)
 plt.plot(x_sq, SrtLineModel(x_sq, m_fit, c_fit), 'g')
+
+
+
+# Now plotting x- and y- errors. Although the errors in x (current) are much larger:
+y_err = fineBeam['v_err (V)']
+x_err = fineBeam['curr_err (A)']
+
+x_err_percent = []
+
+count = 0
+for element in x_err:
+    x_err_percent.append(element/fineBeam['current (A)'][count])
+    count += 1
+    
+print('The x_err as a percentage of x')   
+print(x_err_percent)
+print('\n')
+
+# For error propagation, since i^2, then the error in i is multiplied by 2 (since n=2):
+i_sq_err = 2*np.array(x_err_percent)
+
+print('Propagating error to account for i^2:')
+print(i_sq_err)
+print('\n')
+
+i_sq_abs = []
+count_ = 0
+for element in i_sq_err:
+    i_sq_abs.append(element*fineBeam['current (A)'][count_])
+    count_ += 1
+    
+print('Printing the absolute value of errors for i^2:')
+print(i_sq_abs)
+print('\n')
+    
+
+plt.errorbar(x_sq, y, xerr=i_sq_abs, yerr = y_err, capsize = 2, fmt='o')
