@@ -25,7 +25,7 @@ plt.scatter(x, y)
 
 # FINDING K_BETA PEAK, BIN NO., BEST FIT ETC...
 
-ef GaussModel(x, a, x0, sigma):
+def GaussModel(x, a, x0, sigma):
     y_gauss = a*np.exp(-(x-x0)**2/(2*sigma**2))
     return y_gauss
 
