@@ -1,6 +1,16 @@
 # Spectrum for 150 degrees and best fit w/ error bars
 
+%matplotlib inline
 import numpy as np
+import pandas as pd
+
+import matplotlib.pyplot as plt
+from bokeh.plotting import figure, output_notebook, show
+
+# These two lines enable formatted printing of Pandas DataFrames
+from IPython.core.interactiveshell import InteractiveShell
+InteractiveShell.ast_node_interactivity = "all"
+
 
 # FIT K ALPHA TO 150 DEG. RESULT
 
