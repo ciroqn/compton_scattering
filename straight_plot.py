@@ -119,3 +119,42 @@ print(theoretical_kev)
 inv_theory = 1/theoretical_arr
 
 print(inv_theory)
+
+# ------------------------------ Now to plot extracted data ------------------------------
+
+from scipy.stats import linregress
+
+# This single line does the linear regression fit
+m, c, r, p, stderr = linregress(x_axis, inverse_Eout)
+
+# This is for thereotical line:
+mt, ct, rt, pt, stderrt = linregress(x_axis, inv_theory)
+
+print(f'Gradient: {m:.2f} +/- {stderr:.2f}, Intercept: {c:.2f}')
+print(f'Correlation coefficient: {r:.3f}')
+
+print(f'Gradient: {mt:.2f} +/- {stderrt:.2f}, Intercept: {ct:.2f}')
+print(f'Correlation coefficient: {rt:.3f}')
+
+# Plot the line on to the data:
+xstart = x_axis.min() - 0.25                 # calculate start and end x values
+xend   = x_axis.max() + 0.25                 # for plotting the fitted line 
+xlin   = np.linspace(xstart, xend, 50) # create array of x values for the line
+ylin   = m*xlin+c                      # generate the y values for the straight line
+
+# For theoretical line:
+ylin_t   = mt*xlin+ct  
+
+plt.plot(xlin, ylin, color = 'blue', label= 'Best fit')    # plot the fitted line 
+plt.plot(xlin, ylin_t, color = 'red', label= 'Theoretical line')
+
+plt.rcParams['figure.figsize'] = [12, 8]
+plt.rcParams['font.size'] = 18
+plt.scatter(x_axis, inverse_Eout, ls='None', label="Data points")
+plt.scatter(x_axis, inv_theory, color='red', label='Theoretical data points')
+plt.title('Deflected Photon Energies')
+plt.ylabel(r'$\frac{1}{E_{out}}$ / $ \times 10^{14}$ $J^{-1}$ ')
+plt.xlabel(r'$1-cos(\theta)$')
+plt.legend()
+plt.errorbar(x_axis, inverse_Eout, yerr=final_errs, ls='None', ecolor='black', capsize=5)
+#plt.savefig('photonenergy.png')
